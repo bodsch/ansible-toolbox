@@ -94,7 +94,7 @@ extended() {
 
         # EINZIGE Stelle für Ausnahmen:
         # alles, was hier matched, wird NICHT umgeschrieben
-        if ($name =~ /^(?:facts|play_|role_|check_mode\b|version\b|run_tags\b|skip_tags\b|inventory_|galaxy_collection\b|collections\b|managed\b)/) {
+        if ($name =~ /^(?:facts|play_|role_|check_mode\b|version\b|run_tags\b|skip_tags\b|inventory_|galaxy_collection\b|collections\b|managed|args\b)/) {
           # Original wiederherstellen
           "${dot}ansible_${name}${rest}";
         } else {
