@@ -76,3 +76,54 @@ $ /src/ansible-toolbox/check_requirements.py
 ```
 
 Git URLs unfortunately do not work! :(
+
+## `agc_install.py`
+
+ansible-galaxy-Fallback nach dem Forum-Workaround 
+(GitHub klonen → ansible-galaxy collection build → lokale .tar.gz installieren). 
+
+Der Fallback installiert optional auch Abhängigkeiten, ohne Galaxy zu kontaktieren 
+(per --no-deps + eigene Dependency-Installation). 
+
+Der Workaround ist in dem verlinkten Post beschrieben.
+
+### Standardweg, bei Fehler automatisch Workaround (wie im Forum beschrieben)
+```bash
+./agc_install.py community.docker --force
+```
+
+### Exakte Version
+```bash
+./agc_install.py community.docker==5.0.5 --force
+```
+
+### Oder via Flag
+```bash
+./agc_install.py community.docker --version 5.0.5 --force
+```
+
+### Workaround erzwingen
+```bash
+./agc_install.py community.docker --mode workaround --force
+```
+
+### Wenn du Dependencies im Workaround komplett überspringen willst:
+```bash
+./agc_install.py community.docker --version 5.0.5 --force --deps-mode none
+```
+
+### Repo-Mapping (falls weitere Collections ein nicht-triviales Repo haben):
+```bash
+cat > repo-map.json <<'JSON'
+{
+  "community.library_inventory_filtering_v1": "https://github.com/ansible-collections/community.library_inventory_filtering"
+}
+JSON
+
+./agc_install.py community.docker --version 5.0.5 --force --repo-map repo-map.json
+```
+
+### Standard erzwingen (kein Fallback)
+```bash
+./agc_install.py community.docker --mode galaxy --force
+```
